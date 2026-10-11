@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Latihan UTS IPA Kelas 8</title>
+<style>
+:root{--bg:#f3f6fb;--card:#fff;--ink:#182235;--muted:#68758b;--blue:#2563eb;--blue2:#dbeafe;--green:#15803d;--red:#b91c1c;--line:#e2e8f0}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:var(--ink);line-height:1.5}
+header{background:linear-gradient(135deg,#123b8b,#2563eb);color:white;padding:30px 18px 42px}
+.wrap{max-width:850px;margin:auto}.eyebrow{font-size:.8rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;opacity:.85}
+h1{margin:7px 0;font-size:clamp(1.65rem,5vw,2.5rem);line-height:1.15}header p{margin:10px 0 0;color:#eaf1ff;max-width:600px}
+main{max-width:850px;margin:-22px auto 40px;padding:0 14px}.panel{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:20px;box-shadow:0 8px 25px #14213d0b;margin-bottom:16px}
+.toprow{display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap}.pill{background:var(--blue2);color:#1d4ed8;padding:5px 10px;border-radius:99px;font-size:.82rem;font-weight:750}
+.progress{height:8px;background:#e8edf5;border-radius:99px;overflow:hidden;margin:14px 0 4px}.bar{height:100%;width:0;background:var(--blue);transition:width .2s}
+h2{font-size:1.15rem;margin:0 0 14px}.question{font-size:1.1rem;font-weight:750;margin:12px 0 18px}
+.options{display:grid;gap:10px}.option{display:flex;gap:10px;align-items:flex-start;padding:12px 13px;border:1px solid var(--line);border-radius:12px;cursor:pointer;background:#fff;transition:.15s}
+.option:hover{border-color:#93b4f8;background:#f8fbff}.option input{margin-top:5px;accent-color:var(--blue)}.option:has(input:checked){border-color:var(--blue);background:#eff6ff}
+.controls{display:flex;gap:10px;justify-content:space-between;margin-top:20px;flex-wrap:wrap}.btn{border:0;border-radius:11px;padding:11px 16px;font-weight:750;font-size:.95rem;cursor:pointer}.primary{background:var(--blue);color:#fff}.primary:hover{background:#1d4ed8}.secondary{background:#eef2f7;color:#263449}.btn:disabled{opacity:.45;cursor:not-allowed}
+.small{font-size:.88rem;color:var(--muted)}.hidden{display:none!important}.result-score{font-size:2.6rem;font-weight:850;color:var(--blue);line-height:1.2}.review-item{padding:13px 0;border-bottom:1px solid var(--line)}.review-item:last-child{border-bottom:0}.correct{color:var(--green);font-weight:750}.wrong{color:var(--red);font-weight:750}
+footer{text-align:center;color:var(--muted);font-size:.82rem;padding:0 16px 28px}
+select{padding:9px;border:1px solid var(--line);border-radius:10px;background:white;color:var(--ink)}
+@media(max-width:520px){.panel{padding:16px}.controls .btn{flex:1}header{padding-top:24px}}
+</style>
+</head>
+<body>
+<header><div class="wrap">
+<div class="eyebrow">Teman Belajar • SMP Kelas VIII</div>
+<h1>Latihan UTS IPA</h1>
+<p>Latihan pilihan ganda untuk persiapan ulangan semester 1. Kerjakan dulu, lalu periksa nilai dan pembahasannya.</p>
+</div></header>
+<main>
+<section class="panel" id="intro">
+<div class="toprow"><span class="pill">20 soal latihan</span><span class="small">Tidak perlu internet setelah file dibuka</span></div>
+<h2 style="margin-top:16px">Petunjuk pengerjaan</h2>
+<ul>
+<li>Pilih satu jawaban yang paling tepat untuk setiap soal.</li>
+<li>Gunakan tombol <b>Berikutnya</b> untuk melanjutkan.</li>
+<li>Di akhir latihan, tekan <b>Lihat nilai</b> untuk melihat skor dan pembahasan.</li>
+<li>Soal ini merupakan latihan belajar, bukan soal resmi dari sekolah.</li>
+</ul>
+<label for="topic"><b>Pilih materi</b></label><br>
+<select id="topic" style="margin-top:7px;width:100%">
+<option value="all">Semua materi (20 soal)</option>
+<option value="Gerak">Gerak dan makhluk hidup</option>
+<option value="Usaha">Usaha dan pesawat sederhana</option>
+<option value="Tumbuhan">Struktur dan fungsi tumbuhan</option>
+<option value="Pencernaan">Sistem pencernaan</option>
+<option value="Zat">Zat aditif dan adiktif</option>
+<option value="Darah">Sistem peredaran darah</option>
+</select>
+<div class="controls"><button class="btn primary" id="start">Mulai latihan</button></div>
+</section>
+<section class="panel hidden" id="quiz">
+<div class="toprow"><span class="pill" id="topicPill">Materi</span><span class="small" id="counter">Soal 1 dari 20</span></div>
+<div class="progress"><div class="bar" id="bar"></div></div>
+<div class="question" id="question"></div>
+<div class="options" id="options"></div>
+<div class="controls">
+<button class="btn secondary" id="prev">← Sebelumnya</button>
+<button class="btn primary" id="next">Berikutnya →</button>
+<button class="btn primary hidden" id="finish">Lihat nilai</button>
+</div>
+<p class="small" id="hint">Pilih jawaban sebelum lanjut.</p>
+</section>
+<section class="panel hidden" id="result">
+<div class="toprow"><span class="pill">Hasil latihan</span><span class="small" id="answered"></span></div>
+<h2 style="margin-top:15px">Nilai kamu</h2>
+<div class="result-score" id="score">0/100</div>
+<p id="message"></p>
+<div class="controls">
+<button class="btn primary" id="reviewBtn">Lihat pembahasan</button>
+<button class="btn secondary" id="retry">Coba lagi</button>
+</div>
+</section>
+<section class="panel hidden" id="review">
+<h2>Pembahasan jawaban</h2><div id="reviewList"></div>
+<div class="controls"><button class="btn secondary" id="backResult">Kembali ke hasil</button><button class="btn primary" id="retry2">Ulangi latihan</button></div>
+</section>
+</main>
+<footer>Belajar sedikit demi sedikit lebih baik daripada menghafal semuanya sekaligus. Semangat! ✨</footer>
+<script>
+const bank = [
+{t:"Gerak",q:"Fungsi utama rangka manusia adalah …",o:["Mencerna makanan","Menopang dan melindungi tubuh","Memompa darah","Menghasilkan empedu"],a:1,e:"Rangka menopang tubuh, memberi bentuk, dan melindungi organ dalam."},
+{t:"Gerak",q:"Bagian yang menghubungkan satu tulang dengan tulang lain disebut …",o:["Otot","Tendon","Sendi","Saraf"],a:2,e:"Sendi merupakan tempat bertemunya dua tulang atau lebih."},
+{t:"Gerak",q:"Seseorang menempuh jarak 120 meter dalam 30 detik. Kecepatannya adalah …",o:["2 m/s","3 m/s","4 m/s","6 m/s"],a:2,e:"Kecepatan = jarak ÷ waktu = 120 ÷ 30 = 4 m/s."},
+{t:"Gerak",q:"Jaringan tumbuhan yang mengangkut air dan mineral dari akar adalah …",o:["Floem","Xilem","Epidermis","Kambium"],a:1,e:"Xilem mengangkut air dan mineral dari akar ke bagian tumbuhan lainnya."},
+{t:"Usaha",q:"Dalam IPA, usaha terjadi jika gaya menyebabkan …",o:["Perubahan warna","Perpindahan benda","Perubahan bau","Benda selalu memanas"],a:1,e:"Usaha berkaitan dengan gaya yang menyebabkan perpindahan."},
+{t:"Usaha",q:"Gaya 15 N memindahkan benda sejauh 2 m searah gaya. Besar usahanya …",o:["7,5 J","13 J","17 J","30 J"],a:3,e:"W = F × s = 15 × 2 = 30 joule."},
+{t:"Usaha",q:"Contoh pesawat sederhana jenis tuas adalah …",o:["Gunting","Bola lampu","Termometer","Baterai"],a:0,e:"Gunting bekerja menggunakan prinsip tuas."},
+{t:"Usaha",q:"Papan yang dipasang miring untuk menaikkan barang ke truk merupakan …",o:["Katrol tetap","Roda berporos","Bidang miring","Pegas"],a:2,e:"Bidang miring membantu memindahkan benda dengan gaya lebih kecil melalui lintasan lebih panjang."},
+{t:"Tumbuhan",q:"Tempat utama terjadinya fotosintesis pada tumbuhan adalah …",o:["Akar","Daun","Bunga","Biji"],a:1,e:"Daun memiliki kloroplas yang mengandung klorofil untuk fotosintesis."},
+{t:"Tumbuhan",q:"Fungsi utama akar adalah …",o:["Menyerap air dan mineral","Menghasilkan suara","Memompa darah","Mencerna serangga pada semua tumbuhan"],a:0,e:"Akar menyerap air dan mineral serta membantu menambatkan tumbuhan."},
+{t:"Tumbuhan",q:"Jaringan floem berfungsi mengangkut …",o:["Air saja dari tanah","Hasil fotosintesis","Oksigen ke jantung","Darah ke seluruh tubuh"],a:1,e:"Floem mengangkut hasil fotosintesis ke bagian tumbuhan yang membutuhkan atau menyimpannya."},
+{t:"Pencernaan",q:"Urutan saluran pencernaan yang benar setelah mulut adalah …",o:["Lambung lalu kerongkongan","Kerongkongan lalu lambung","Usus besar lalu lambung","Hati lalu pankreas"],a:1,e:"Urutan awal saluran pencernaan ialah mulut, kerongkongan, lalu lambung."},
+{t:"Pencernaan",q:"Penyerapan sebagian besar sari-sari makanan terjadi di …",o:["Mulut","Kerongkongan","Usus halus","Usus besar"],a:2,e:"Usus halus memiliki permukaan luas untuk menyerap zat gizi."},
+{t:"Pencernaan",q:"Fungsi utama usus besar adalah …",o:["Menyerap air dan membentuk feses","Mengunyah makanan","Memompa darah","Menghasilkan suara"],a:0,e:"Usus besar menyerap air dan membantu pembentukan feses."},
+{t:"Zat",q:"Bahan yang ditambahkan ke makanan untuk tujuan tertentu disebut …",o:["Zat aditif","Zat besi saja","Oksigen","Jaringan"],a:0,e:"Zat aditif ditambahkan, misalnya untuk memberi warna, rasa, atau memperpanjang daya simpan."},
+{t:"Zat",q:"Berikut yang merupakan contoh zat aditif makanan adalah …",o:["Pewarna makanan","Batu kerikil","Pasir","Karbon pada pensil"],a:0,e:"Pewarna makanan merupakan zat aditif; penggunaannya harus sesuai ketentuan keamanan."},
+{t:"Zat",q:"Zat adiktif adalah zat yang dapat menyebabkan …",o:["Fotosintesis","Ketergantungan","Pembentukan tulang saja","Penguapan air"],a:1,e:"Zat adiktif dapat menimbulkan ketergantungan dan berisiko bagi kesehatan."},
+{t:"Darah",q:"Organ yang memompa darah ke seluruh tubuh adalah …",o:["Paru-paru","Lambung","Jantung","Usus halus"],a:2,e:"Jantung memompa darah melalui pembuluh darah."},
+{t:"Darah",q:"Sel darah merah terutama berfungsi untuk …",o:["Mengangkut oksigen","Mencerna protein","Membentuk urine","Menghasilkan empedu"],a:0,e:"Sel darah merah mengandung hemoglobin yang mengikat dan mengangkut oksigen."},
+{t:"Darah",q:"Komponen darah yang membantu proses pembekuan darah adalah …",o:["Trombosit","Sel saraf","Alveolus","Empedu"],a:0,e:"Trombosit atau keping darah berperan dalam proses pembekuan darah."}
+];
+let questions=[],answers={},idx=0,score=0;
+const $=id=>document.getElementById(id);
+function shuffle(arr){return [...arr].sort(()=>Math.random()-.5)}
+function start(){const t=$("topic").value;questions=shuffle(t==="all"?bank:bank.filter(x=>x.t===t));answers={};idx=0;$("intro").classList.add("hidden");$("result").classList.add("hidden");$("review").classList.add("hidden");$("quiz").classList.remove("hidden");render()}
+function render(){const q=questions[idx];$("topicPill").textContent=q.t==="Gerak"?"Gerak dan makhluk hidup":q.t==="Usaha"?"Usaha dan pesawat sederhana":q.t==="Tumbuhan"?"Struktur tumbuhan":q.t==="Pencernaan"?"Sistem pencernaan":q.t==="Zat"?"Zat aditif dan adiktif":"Peredaran darah";$("counter").textContent=`Soal ${idx+1} dari ${questions.length}`;$("bar").style.width=`${(idx+1)/questions.length*100}%`;$("question").textContent=q.q;$("options").innerHTML="";
+q.o.forEach((opt,j)=>{const label=document.createElement("label");label.className="option";const radio=document.createElement("input");radio.type="radio";radio.name="answer";radio.checked=answers[idx]===j;radio.addEventListener("change",()=>{answers[idx]=j;$("hint").textContent="Jawaban tersimpan."});const span=document.createElement("span");span.textContent=String.fromCharCode(65+j)+". "+opt;label.append(radio,span);$("options").append(label)});
+$("prev").disabled=idx===0;$("next").classList.toggle("hidden",idx===questions.length-1);$("finish").classList.toggle("hidden",idx!==questions.length-1);$("hint").textContent=answers[idx]===undefined?"Pilih jawaban yang paling tepat.":"Jawaban kamu sudah tersimpan."}
+function finish(){score=questions.reduce((n,q,i)=>n+(answers[i]===q.a?1:0),0);$("quiz").classList.add("hidden");$("result").classList.remove("hidden");$("score").textContent=`${Math.round(score/questions.length*100)}/100`;$("answered").textContent=`${Object.keys(answers).length} dari ${questions.length} dijawab`;$("message").textContent=score/questions.length>=.8?"Bagus sekali! Tetap ulangi materi yang masih sulit.":score/questions.length>=.6?"Lumayan! Baca pembahasan lalu coba lagi.":"Jangan menyerah. Pelajari pembahasan dan ulangi latihan."; }
+function showReview(){$("result").classList.add("hidden");$("review").classList.remove("hidden");$("reviewList").innerHTML="";questions.forEach((q,i)=>{const d=document.createElement("div");d.className="review-item";const title=document.createElement("div");title.style.fontWeight="750";title.textContent=`${i+1}. ${q.q}`;const status=document.createElement("p");status.className=answers[i]===q.a?"correct":"wrong";status.textContent=`Jawaban benar: ${String.fromCharCode(65+q.a)}. ${q.o[q.a]}${answers[i]===q.a?" ✓":" · Jawaban kamu: "+(answers[i]===undefined?"Belum dijawab":String.fromCharCode(65+answers[i])+". "+q.o[answers[i]])}`;const explain=document.createElement("p");explain.className="small";explain.textContent=q.e;d.append(title,status,explain);$("reviewList").append(d)})}
+function retry(){ $("review").classList.add("hidden");$("result").classList.add("hidden");$("quiz").classList.add("hidden");$("intro").classList.remove("hidden")}
+$("start").addEventListener("click",start);$("prev").addEventListener("click",()=>{if(idx>0){idx--;render()}});$("next").addEventListener("click",()=>{if(answers[idx]===undefined){$("hint").textContent="Pilih jawaban dulu, ya.";return}idx++;render()});$("finish").addEventListener("click",()=>{if(answers[idx]===undefined){$("hint").textContent="Pilih jawaban dulu, ya.";return}finish()});$("reviewBtn").addEventListener("click",showReview);$("retry").addEventListener("click",retry);$("retry2").addEventListener("click",retry);$("backResult").addEventListener("click",()=>{$("review").classList.add("hidden");$("result").classList.remove("hidden")});
+</script>
+</body>
+</html>
